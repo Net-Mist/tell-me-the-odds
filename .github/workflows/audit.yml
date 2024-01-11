@@ -9,13 +9,6 @@ on:
   workflow_dispatch:
 
 jobs:
-  security_audit: # TODO remove this version ?
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: taiki-e/install-action@cargo-deny
-      - name: Scan for vulnerabilities
-        run: cargo deny check advisories
   cargo-deny:
     runs-on: ubuntu-latest
     steps:
@@ -23,8 +16,9 @@ jobs:
     - uses: EmbarkStudios/cargo-deny-action@v1
   cargo-audit:
     runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      contents: read
     steps:
     - uses: actions/checkout@v3
-    - uses: actions-rs/audit-check@v1
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
+    - uses: actions-rust-lang/audit@v1
