@@ -47,7 +47,6 @@ Contains code to connect and read from the DB, process the CLI input and definin
 
 ## TODO
 
-- coverage is missing
 - bulding the docker image
 - pushing to dockerhub with a dev tag
 - release-please

@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  fmt:
+  fmt-lint-build-test:
     runs-on: ubuntu-latest
     env:
         DATABASE_URL: sqlite://${{ github.workspace }}/examples/universe.db
@@ -22,7 +22,15 @@ jobs:
       - name: Test dev
         run: cargo test
       - name: Build release
-        run: cargo build
+        run: cargo build --release
       - name: Test release
-        run: cargo test
-
+        run: cargo test --release
+      - name: Install code coverage tool
+        run: cargo install cargo-tarpaulin
+      - name: Generate code coverage
+        run: cargo tarpaulin --out Html
+      - name: Archive code coverage results
+        uses: actions/upload-artifact@v1
+        with:
+          name: code-coverage-report
+          path: tarpaulin-report.html

@@ -1,3 +1,4 @@
 target
 old
 .cargo
+tarpaulin-report.html
