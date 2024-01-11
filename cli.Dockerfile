@@ -7,7 +7,7 @@ COPY front /app/front/
 COPY .sqlx /app/.sqlx
 RUN cargo build --release
 
-FROM ubuntu:24.04
+FROM debian:bookworm-slim
 WORKDIR /app
 COPY --from=builder /app/target/release/give-me-the-odds .
 ENTRYPOINT [ "./give-me-the-odds" ]
