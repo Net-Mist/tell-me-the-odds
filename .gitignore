@@ -1,5 +1,3 @@
 target
 old
-*.db
-*.json
 .cargo
