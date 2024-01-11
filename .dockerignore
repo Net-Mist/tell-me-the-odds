@@ -3,3 +3,4 @@ old
 .cargo
 tarpaulin-report.html
 millennium.log*
+.env

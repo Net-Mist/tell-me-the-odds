@@ -1,0 +1,32 @@
+{
+  "db_name": "SQLite",
+  "query": "SELECT * FROM ROUTES",
+  "describe": {
+    "columns": [
+      {
+        "name": "origin",
+        "ordinal": 0,
+        "type_info": "Text"
+      },
+      {
+        "name": "destination",
+        "ordinal": 1,
+        "type_info": "Text"
+      },
+      {
+        "name": "travel_time",
+        "ordinal": 2,
+        "type_info": "Int64"
+      }
+    ],
+    "parameters": {
+      "Right": 0
+    },
+    "nullable": [
+      true,
+      true,
+      true
+    ]
+  },
+  "hash": "5f78a2e784e38a5d2b280e97864a78e4e3f2dacfbc19cc8739beceb117351c40"
+}

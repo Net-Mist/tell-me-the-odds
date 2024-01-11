@@ -1,7 +1,9 @@
+use actix_web::middleware::Logger;
 use actix_web::{
     dev::Server, get, post, web, App, HttpResponse, HttpServer, Responder, ResponseError,
 };
 use anyhow::Result;
+use tracing::{info, info_span};
 
 use crate::{
     application_services::{EmpireData, MillenniumFalconData},
@@ -31,6 +33,11 @@ async fn health_check() -> impl Responder {
 
 #[post("/proba")]
 async fn proba(data: web::Data<AppState>, req_body: String) -> std::result::Result<String, Error> {
+    let _span = info_span!(
+        "Computing proba of success",
+        %req_body
+    )
+    .entered();
     let empire_data = EmpireData::parse(&req_body)?;
     let hunter_planning = empire_data.to_bounty_hunters_planning(&data.planet_catalog);
     let proba = compute_probability_of_success(
@@ -42,6 +49,7 @@ async fn proba(data: web::Data<AppState>, req_body: String) -> std::result::Resu
         &data.millennium_falcon_data.arrival,
         empire_data.countdown,
     )? * 100.;
+    info!("probability of success is {proba}%");
     Ok(format!("{proba}%"))
 }
 
@@ -63,6 +71,7 @@ pub fn run(
                 planet_catalog: planet_catalog.clone(),
                 millennium_falcon_data: millennium_falcon_data.clone(),
             }))
+            .wrap(Logger::default())
             .service(health_check)
             .service(proba)
             .service(index)

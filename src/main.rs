@@ -16,6 +16,10 @@ pub async fn setup_webserver(address: &str) -> Result<Server> {
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
+    let file_appender = tracing_appender::rolling::daily(".", "millennium.log");
+    let (non_blocking, _guard) = tracing_appender::non_blocking(file_appender);
+    tracing_subscriber::fmt().with_writer(non_blocking).init();
+
     match setup_webserver("127.0.0.1:8000").await {
         Ok(server) => server.await,
         Err(e) => {

@@ -2,7 +2,9 @@
 
 Solution of the [developer-test](https://github.com/lioncowlionant/developer-test).
 
-With a recent version of rust (tested with 1.75.0), you can build the project with `cargo build --release`. Then you can run the cli with `./target/release/give-me-the-odds examples/millennium-falcon.json examples/example2/empire.json` and the webserver with `./target/release/millennium_falcon examples/millennium-falcon.json`
+With a recent version of rust (tested with 1.75.0), you can build the project with `cargo build --release`. Then you can run the cli with `./target/release/give-me-the-odds examples/millennium-falcon.json examples/example2/empire.json` and the webserver with `./target/release/millennium_falcon examples/millennium-falcon.json`.
+
+Note that when starting, the webserver will create a file `millennium.log.{date}` containing the log of the server. stdio will be pretty silent if everything goes well. The server will be listening on `127.0.0.1:8000`.
 
 ## Architecture
 
@@ -31,7 +33,13 @@ Contains code to connect and read from the DB, process the CLI input and definin
 
 ## Technology stack
 
-This code was written in Rust 1.75.0. Notables dependencies are Actix for the web server, Anyhow for the error handling, SQLX for database connection and Tokio for the async engine.
+This code was written in Rust 1.75.0. Notables dependencies are :
+
+- Actix for the web server
+- Anyhow for the error handling
+- SQLX for database connection and compiled-time safety
+- Tokio for the async engine
+- Tracing for the tracing (logging with span)
 
 ### CI
 
@@ -39,14 +47,12 @@ This code was written in Rust 1.75.0. Notables dependencies are Actix for the we
 
 - One that performs a security audit every day. More specifically:
   - Cargo-deny check for security vulnerabilities, license violation, unmaintained projects and several other things.
-  - Cargo-audit for a second security audit. Seems to be more precise than cargo-deny, and also automatically open issue on security vulnerabilities.
+  - Cargo-audit for a second security audit. Seems to be more precise than cargo-deny, and also automatically open issue on security vulnerabilities. (see for instance [this issue](https://github.com/Net-Mist/tell-me-the-odds/issues/1))
 - A second that run the classic steps:
   - format with `cargo-fmt`
   - lint with `clippy`
   - build and test in dev mode
   - build and test again in release mode
-  - build the docker image
-  - push the docker image to dockerhub
   - compute and publish code coverage
 
 ## Test
@@ -55,7 +61,6 @@ Unit-tests are defined directly inside the code. Look for the `mod test`. Integr
 
 ## TODO
 
-- logging
 - bulding the docker image
 - pushing to dockerhub with a dev tag
 - release-please
