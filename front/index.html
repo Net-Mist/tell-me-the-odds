@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Odd computer</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        #upload-container {
+            text-align: center;
+            padding: 20px;
+            border: 2px dashed #ccc;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        #file-input {
+            display: none;
+        }
+
+        #upload-text {
+            font-size: 18px;
+            color: #555;
+        }
+
+        #result-container {
+            margin-top: 20px;
+            display: none;
+        }
+
+        #json-output {
+            white-space: pre-line;
+        }
+    </style>
+</head>
+<body>
+    <div id="upload-container" onclick="handleClick()">
+        <input type="file" id="file-input" accept=".json" onchange="handleFile()">
+        <p id="upload-text">Click or drag and drop a JSON file containing the plans of the Empire here</p>
+    </div>
+
+    <div id="result-container">
+        <h2>Result from Server:</h2>
+        <pre id="server-result"></pre>
+    </div>
+
+    <script>
+        function handleClick() {
+            document.getElementById('file-input').click();
+        }
+
+        function handleFile() {
+            const fileInput = document.getElementById('file-input');
+            const resultContainer = document.getElementById('result-container');
+
+            const file = fileInput.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const content = e.target.result;
+                    sendDataToServer(content);
+                    resultContainer.style.display = 'block';
+                };
+                
+                reader.readAsText(file);
+            }
+        }
+
+        
+        function sendDataToServer(data) {
+            const url = '/proba';
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: data,
+            })
+            .then(response => response.text())
+            .then(result => {
+                const serverResult = document.getElementById('server-result');
+                serverResult.textContent = result;
+            })
+            .catch(error => {
+                console.error('Error sending data to server:', error);
+            });
+        }
+    </script>
+</body>
+</html>

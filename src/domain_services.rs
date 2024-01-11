@@ -2,7 +2,7 @@ use std::{cmp::Reverse, collections::BinaryHeap};
 
 use anyhow::Result;
 
-use crate::domain_model::{BountyHunterPlanning, GalaxyRoutes, PlanetCatalog, PlanetId};
+use crate::domain_models::{BountyHunterPlanning, GalaxyRoutes, PlanetCatalog, PlanetId};
 
 /// When exploring all the states to find the best route, we want to
 /// privilege the one with less bounty hunter, then the one that took the less amont of time.
@@ -96,7 +96,7 @@ fn probability_been_captured(n_bounty_hunter: u64) -> f64 {
 mod test {
 
     use crate::{
-        domain_model::{BountyHunterPlanning, GalaxyRoutes, PlanetCatalog},
+        domain_models::{BountyHunterPlanning, GalaxyRoutes, PlanetCatalog},
         domain_services::probability_been_captured,
     };
 

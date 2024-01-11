@@ -5,21 +5,28 @@ use std::{
 
 use anyhow::{Context, Result};
 use serde::Deserialize;
+use std::path::PathBuf;
 
-use crate::domain_model::{BountyHunterPlanning, GalaxyRoutes, PlanetCatalog};
+use crate::domain_models::{BountyHunterPlanning, GalaxyRoutes, PlanetCatalog};
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Clone)]
 pub struct MillenniumFalconData {
     pub autonomy: u64,
     pub departure: String,
     pub arrival: String,
-    pub routes_db: String,
+    pub routes_db: PathBuf,
 }
 
 impl MillenniumFalconData {
     pub fn read(path: &str) -> Result<Self> {
         let content = &fs::read_to_string(path).context("Unable to read millennium data file")?;
-        MillenniumFalconData::parse(content)
+        let mut data = MillenniumFalconData::parse(content)?;
+        // fix the routes_db path to be relative to the yaml file
+        // the unwrap here is safe as path is a file (else the read_to_string can't work)
+        let mut path = PathBuf::from(path).parent().unwrap().to_path_buf();
+        path.push(data.routes_db);
+        data.routes_db = path;
+        Ok(data)
     }
 
     pub fn parse(text: &str) -> Result<Self> {
@@ -96,7 +103,7 @@ mod test {
 
     use crate::{
         application_services::BountyHunter,
-        domain_model::{BountyHunterPlanning, GalaxyRoutes, PlanetCatalog},
+        domain_models::{BountyHunterPlanning, GalaxyRoutes, PlanetCatalog},
     };
 
     use super::{into_galaxy_routes_and_planet_id, EmpireData, Route};

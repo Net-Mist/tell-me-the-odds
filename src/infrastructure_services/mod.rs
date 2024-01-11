@@ -1,22 +1,14 @@
-use actix_web::{dev::Server, get, App, HttpResponse, HttpServer, Responder};
+use std::path::Path;
+
 use anyhow::anyhow;
 use anyhow::Context;
 use anyhow::Result;
-use itertools::Itertools;
 use sqlx::sqlite::SqlitePoolOptions;
-use std::env;
 
 use crate::application_services::Route;
 
-pub fn parse_cli() -> Result<(String, String)> {
-    if let Some((millennium_data_path, empire_data_path)) = env::args().skip(1).collect_tuple() {
-        Ok((millennium_data_path, empire_data_path))
-    } else {
-        Err(anyhow!(
-            "script should have 2 arguments, millennium_data_path and empire_data_path",
-        ))
-    }
-}
+pub mod actix;
+pub mod args;
 
 #[derive(Debug)]
 struct RouteDB {
@@ -61,12 +53,18 @@ impl TryFrom<RouteDB> for Route {
     }
 }
 
-pub async fn get_routes_from_db(db_path: &str) -> Result<Vec<Route>> {
-    // db
+pub async fn get_routes_from_db(db_path: &Path) -> Result<Vec<Route>> {
+    let db_path = db_path
+        .to_path_buf()
+        .into_os_string()
+        .into_string()
+        .map_err(|e| anyhow!("{e:?}"))
+        .context("Unable to convert path to string")?;
     let pool = SqlitePoolOptions::new()
-        .max_connections(5)
-        .connect(db_path)
-        .await?;
+        .max_connections(1)
+        .connect(&db_path)
+        .await
+        .context(format!("Unable to connect the the database at {db_path}"))?;
 
     let routes: Vec<Route> = sqlx::query_as!(RouteDB, "SELECT * FROM ROUTES")
         .fetch_all(&pool)
@@ -84,16 +82,4 @@ pub async fn get_routes_from_db(db_path: &str) -> Result<Vec<Route>> {
         .collect();
 
     Ok(routes)
-}
-
-#[get("/health_check")]
-async fn health_check() -> impl Responder {
-    HttpResponse::Ok()
-}
-
-pub fn run(address: &str) -> Result<Server> {
-    let server = HttpServer::new(|| App::new().service(health_check))
-        .bind(address)?
-        .run();
-    Ok(server)
 }

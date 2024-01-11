@@ -32,7 +32,7 @@ impl Display for PlanetId {
 /// This design facilitates quick access to all routes originating from a specific planet.
 /// It's important to note that planets are identified not by their names but by a `PlanetId`,
 /// ensuring that the representation of planets remains independent of their names.
-#[derive(Debug, PartialEq, Eq)]
+#[derive(Debug, PartialEq, Eq, Clone)]
 pub struct GalaxyRoutes(HashMap<PlanetId, Vec<(PlanetId, u64)>>);
 
 impl Default for GalaxyRoutes {
@@ -92,7 +92,7 @@ impl GalaxyRoutes {
 }
 
 /// Structure keeping the relationship between the planet id and its information (for now only name).
-#[derive(Debug, PartialEq, Eq)]
+#[derive(Debug, PartialEq, Eq, Clone)]
 pub struct PlanetCatalog(HashMap<String, PlanetId>);
 
 impl Default for PlanetCatalog {
