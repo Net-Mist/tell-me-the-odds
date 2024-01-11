@@ -34,8 +34,8 @@ Contains code to connect and read from the DB, process the CLI input and definin
 ### CI
 
 - A github action perform a security audit every day. More specifically:
-  - cargo-deny check for security vulnerabilities, license violation, unmaintained projects and several other things
-  - cargo-audit for a second security audit. Seems to find more stuff than cargo-deny
+  - Cargo-deny check for security vulnerabilities, license violation, unmaintained projects and several other things.
+  - Cargo-audit for a second security audit. Seems to be more precise than cargo-deny, and also automatically open issue on security vulnerabilities.
 - A second CI run the classic steps:
 
   - format with `cargo-fmt`
