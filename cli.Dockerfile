@@ -9,5 +9,5 @@ RUN cargo build --release
 
 FROM ubuntu:24.04
 WORKDIR /app
-COPY --from=builder /app/target/release/millennium_falcon .
-ENTRYPOINT [ "./millennium_falcon" ]
+COPY --from=builder /app/target/release/give-me-the-odds .
+ENTRYPOINT [ "./give-me-the-odds" ]

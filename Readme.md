@@ -4,7 +4,11 @@ Solution of the [developer-test](https://github.com/lioncowlionant/developer-tes
 
 With a recent version of rust (tested with 1.75.0), you can build the project with `cargo build --release`. Then you can run the cli with `./target/release/give-me-the-odds examples/millennium-falcon.json examples/example2/empire.json` and the webserver with `./target/release/millennium_falcon examples/millennium-falcon.json`.
 
-Note that when starting, the webserver will create a file `millennium.log.{date}` containing the log of the server. stdio will be pretty silent if everything goes well. The server will be listening on `127.0.0.1:8000`.
+Note that when starting, the webserver will create a folder `logs` containing a file `millennium.log.{date}` with the log of the server. stdio will be pretty silent if everything goes well. The server will be listening on `127.0.0.1:8000`.
+
+It is also possible to start the server with docker by running `docker build -t millennium-falcon .` then `docker run -it --rm -v ./logs:/app/logs -v ./examples:/app/examples -p 0.0.0.0:8000:8000 millennium-falcon examples/millennium-falcon.json`
+
+and the cli by running `docker build -t give-me-the-odds -f cli.Dockerfile .` then `docker run -it --rm -v ./examples:/app/examples give-me-the-odds examples/millennium-falcon.json examples/example1/empire.json`
 
 ## Architecture
 
