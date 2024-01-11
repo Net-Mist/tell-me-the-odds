@@ -1,4 +1,4 @@
-use actix_web::{dev::Server, get, web, App, HttpResponse, HttpServer, Responder};
+use actix_web::{dev::Server, get, App, HttpResponse, HttpServer, Responder};
 use anyhow::anyhow;
 use anyhow::Context;
 use anyhow::Result;

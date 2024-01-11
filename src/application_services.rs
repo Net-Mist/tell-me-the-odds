@@ -93,7 +93,6 @@ pub fn into_galaxy_routes_and_planet_id(routes: Vec<Route>) -> (GalaxyRoutes, Pl
 
 #[cfg(test)]
 mod test {
-    
 
     use crate::{
         application_services::BountyHunter,

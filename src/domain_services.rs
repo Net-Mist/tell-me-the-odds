@@ -1,6 +1,6 @@
 use std::{cmp::Reverse, collections::BinaryHeap};
 
-use anyhow::{Result};
+use anyhow::Result;
 
 use crate::domain_model::{BountyHunterPlanning, GalaxyRoutes, PlanetCatalog, PlanetId};
 
@@ -94,7 +94,6 @@ fn probability_been_captured(n_bounty_hunter: u64) -> f64 {
 
 #[cfg(test)]
 mod test {
-    
 
     use crate::{
         domain_model::{BountyHunterPlanning, GalaxyRoutes, PlanetCatalog},

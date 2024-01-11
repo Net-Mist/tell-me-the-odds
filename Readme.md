@@ -6,7 +6,7 @@ Solution of the [developer-test](https://github.com/lioncowlionant/developer-tes
 
 The code follows the onion architecture. More specifically, the code is divided into 4 sections:
 
-- Domain modeld
+- Domain model
 - Domain services
 - Application services
 - Infrastructure services
@@ -29,37 +29,33 @@ Contains code to connect and read from the DB, process the CLI input and definin
 
 ## Technology stack
 
-This code was written in Rust 1.75.0.
+- This code was written in Rust 1.75.0.
 
-For linter, formatter, test, code coverage and code security audit, please refer to the CI in `.github/workflow`
+### CI
 
-given the number of star in the galaxy, the code may handle a large amont of data => Rust
+- A github action perform a security audit every day. More specifically:
+  - cargo-deny check for security vulnerabilities, license violation, unmaintained projects and several other things
+  - cargo-audit for a second security audit. Seems to find more stuff than cargo-deny
+- A second CI run the classic steps:
 
-test:
+  - format with `cargo-fmt`
+  - lint with `clippy`
+  - build and test in dev mode
+  - build and test again in release mode
+  - build the docker image
+  - push the docker image to dockerhub
 
-- full black-box tests for the endpoints
-- some scenario tests for the example provided in the documentation
-- unit-test inside the code
+## TODO
 
-or the backend of the technical test.
-
-Instrumented
-observability
-database migrations
-automated tests
-benchmark
-
-coverage
-
-Questions:
-
-Hello !
-Thanks a lot. I've had a look at the test and I have a couple of question regarding the technical requirements:
-
-- Is it possible to have an upper-bound for the number of planets, the number of bounty hunters, the number of routes and the countdown ?
-- Should I consider that the database containing the ROUTES table can be load in memory, or should I consider that in the real application this database is too big, and I should only query it (as if it wasn't sqlite)?
-- Is it possible to have some details on the hardware of the Millennium Falcon ? Is it running x86-64 or ARM ? Is it running Linux, MacOS or Windows ? Is there a maximum limit of CPU/RAM/Time that I should be aware of?
-- How many simultaneous connections are expected to the server ?
-- Are you expecting 2 different servers for serving the front and the back ? Or could the backend be responsible serving the frontend ?
-
-- How strong are the DB assumptions ? When executing a `.schema ROUTES` on the DB file, it gave: `CREATE TABLE routes (    origin TEXT,    destination TEXT,    travel_time UNSIGNED INTEGER);`, so nothing prevent the origin and destination to be null or empty.
+- coverage is missing
+- bulding the docker image
+- pushing to dockerhub with a dev tag
+- release-please
+- release protocol
+- front
+- Instrumented
+- observability
+- test:
+  - full black-box tests for the endpoints
+  - some scenario tests for the example provided in the documentation
+  - unit-test inside the code
