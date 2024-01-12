@@ -13,7 +13,6 @@
   - [Technology stack](#technology-stack)
   - [CI](#ci)
   - [Test](#test)
-  - [TODO](#todo)
   <!--toc:end-->
 
 Solution of the [developer-test](https://github.com/lioncowlionant/developer-test).

@@ -63,20 +63,23 @@ pub async fn get_routes_from_db(db_path: &Path) -> Result<Vec<Route>> {
         .await
         .context(format!("Unable to connect the the database at {db_path}"))?;
 
-    let routes: Vec<Route> = sqlx::query_as!(RouteDB, "SELECT origin, destination, travel_time FROM ROUTES")
-        .fetch_all(&pool)
-        .await?
-        .into_iter()
-        .filter_map(
-            |d| match d.try_into().context("Issue reading route in the database") {
-                Ok(v) => Some(v),
-                Err(e) => {
-                    println!("{e:#?}");
-                    None
-                }
-            },
-        )
-        .collect();
+    let routes: Vec<Route> = sqlx::query_as!(
+        RouteDB,
+        "SELECT origin, destination, travel_time FROM ROUTES"
+    )
+    .fetch_all(&pool)
+    .await?
+    .into_iter()
+    .filter_map(
+        |d| match d.try_into().context("Issue reading route in the database") {
+            Ok(v) => Some(v),
+            Err(e) => {
+                println!("{e:#?}");
+                None
+            }
+        },
+    )
+    .collect();
 
     Ok(routes)
 }
