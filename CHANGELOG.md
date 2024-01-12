@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.0](https://github.com/Net-Mist/tell-me-the-odds/compare/v0.1.0...v0.2.0) (2024-01-12)
+
+
+### Features
+
+* add github action to build and push docker images ([90726c0](https://github.com/Net-Mist/tell-me-the-odds/commit/90726c09341fbe6da72385b9944a5fd60316213f))
+
 ## 0.1.0 (2024-01-11)
 
 
