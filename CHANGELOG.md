@@ -1,5 +1,22 @@
 # Changelog
 
+## [1.0.0](https://github.com/Net-Mist/tell-me-the-odds/compare/v0.2.1...v1.0.0) (2024-01-12)
+
+
+### Features
+
+* reorganize infrastructure services ([a634c2a](https://github.com/Net-Mist/tell-me-the-odds/commit/a634c2a4bd548c7534f21d7fe398d8749e8d3f94))
+
+
+### Bug Fixes
+
+* reorganize front elements ([af3c699](https://github.com/Net-Mist/tell-me-the-odds/commit/af3c69913e46cb438ecf3fdfb5d7757f03ab3439))
+
+
+### Miscellaneous Chores
+
+* release 1.0.0 ([981b53d](https://github.com/Net-Mist/tell-me-the-odds/commit/981b53dd954986826e5f7e28e261aa407b1565c8))
+
 ## [0.2.1](https://github.com/Net-Mist/tell-me-the-odds/compare/v0.2.0...v0.2.1) (2024-01-12)
 
 
