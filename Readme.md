@@ -3,6 +3,8 @@
 <!--toc:start-->
 
 - [Tell me the odds](#tell-me-the-odds)
+  - [Running with Rust](#running-with-rust)
+  - [Running with Docker](#running-with-docker)
   - [Architecture](#architecture)
     - [Domain models](#domain-models)
     - [Domain services](#domain-services)
@@ -16,19 +18,34 @@
 
 Solution of the [developer-test](https://github.com/lioncowlionant/developer-test).
 
+## Running with Rust
+
 With a recent version of rust (tested with 1.75.0), you can build the project with `cargo build --release`. Then you can run the cli with `./target/release/give-me-the-odds examples/millennium-falcon.json examples/example2/empire.json` and the webserver with `./target/release/millennium_falcon examples/millennium-falcon.json`.
 
-Note that when starting, the webserver will create a folder `logs` containing a file `millennium.log.{date}` with the log of the server. stdio will be pretty silent if everything goes well. The server will be listening on `0.0.0.0:8000`.
+Note that when starting, the webserver will create a folder `logs` containing a file `millennium.log.{date}` with the logs of the server. stdio will be pretty silent if everything goes well. The server will be listening on `0.0.0.0:8000`.
 
-It is also possible to start the server and the cli with docker.
+## Running with Docker
 
-First
+It is also possible to run the server and the cli with docker by running
 
-- Build the docker images locally by running `docker build -t millennium-falcon .` or `docker build -t give-me-the-odds -f cli.Dockerfile .`
-- Or pull the images from dockerhub: `docker pull netmist/give-me-the-odds:0.3.0`, `docker pull netmist/millenium-falcon:0.3.0`
+```sh
+docker run -it --rm \
+  -v ./logs:/app/logs \
+  -v ./examples:/app/examples \
+  -p 0.0.0.0:8000:8000 \
+  netmist/millennium-falcon:0.2.1 \
+  examples/millennium-falcon.json
+```
 
-Then run the server with `docker run -it --rm -v ./logs:/app/logs -v ./examples:/app/examples -p 0.0.0.0:8000:8000 millennium-falcon examples/millennium-falcon.json`
-and the cli with `docker run -it --rm -v ./examples:/app/examples give-me-the-odds examples/millennium-falcon.json examples/example1/empire.json`
+and
+
+```sh
+docker run -it --rm \
+  -v ./examples:/app/examples \
+  netmist/give-me-the-odds:0.2.1 \
+  examples/millennium-falcon.json \
+  examples/example2/empire.json
+```
 
 ## Architecture
 
@@ -43,9 +60,14 @@ The code follows the onion architecture. More specifically, the code is divided 
 
 Contains the definitions of `PlanetId`, `GalaxyRoutes`, `PlanetCatalog` and `BountyHunterPlanning`.
 
+> Implementation notes:
+> Graph are tricky to implement in Rust. Because of the only-one-owner rule, a node can't own its neighbors. A solution could be to wrap the node structure in a reference counter, but as there is no cycle detection in Rust reference counter, it could create memory leak.
+> The solution adopted here is to create a flat data structure (`PlanetCatalog`) that contains all the planets' data (only the name for now) and create a `PlanetId` for each of them (think of it as a pointer).
+> Then the other data structures work directly with `PlanetId`. As it is a small structure (only a `usize`), it can be copied or cloned for free.
+
 ### Domain services
 
-Contains the public definition of `compute_probability_of_success`, and some private definitions for this function.
+Contains the `compute_probability_of_success` function.
 
 ### Application services
 
@@ -53,7 +75,11 @@ Contains the definition of `MillenniumFalconData` and `EmpireData` matching the 
 
 ### Infrastructure services
 
-Contains code to connect and read from the DB, process the CLI input and defining the webserver endpoints.
+Contains code to connect and read from the DB, process the CLI arguments and defining the webserver endpoints.
+
+> Implementation notes:
+> We consider that all the data in the database fit in the memory of the rust program, and that the content of the database is immutable. This is why we are doing a single query to get all the data.
+> In case this assumption doesn't hold anymore, we could create a `Planet` trait that provide a `get_route` method that gives all the routes starting from a specific planet. Then we could implement this trait both for our internal types and for a structure responsible to maintaining the DB connection and type our code with this trait instead of using explicit structure.
 
 ## Technology stack
 
@@ -84,8 +110,3 @@ This code was written in Rust 1.75.0. Notables dependencies are :
 ## Test
 
 Unit-tests are defined directly inside the code. Look for the `mod test`. Integration tests are defined in the `tests` folder
-
-## TODO
-
-- release-please
-- release protocol
