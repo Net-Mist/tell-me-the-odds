@@ -18,17 +18,21 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Setup Docker Buildx
         uses: docker/setup-buildx-action@v3
+      - name: Prepare version variable
+        run: |
+          TAG=${{ github.ref_name }}
+          echo "VERSION=${TAG#v}" >> $GITHUB_ENV
       - name: Build and push Docker cli image
         uses: docker/build-push-action@v5
         with:
           context: .
           file: ./cli.Dockerfile
           push: true
-          tags: netmist/give-me-the-odds${{ github.ref_name }}
+          tags: netmist/give-me-the-odds:${{ env.VERSION }}
       - name: Build and push Docker server image
         uses: docker/build-push-action@v5
         with:
           context: .
           file: ./Dockerfile
           push: true
-          tags: netmist/millennium-falcon${{ github.ref_name }}
+          tags: netmist/millennium-falcon:${{ env.VERSION }}
