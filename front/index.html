@@ -42,14 +42,15 @@
     </style>
 </head>
 <body>
-    <div id="upload-container" onclick="handleClick()">
-        <input type="file" id="file-input" accept=".json" onchange="handleFile()">
-        <p id="upload-text">Click or drag and drop a JSON file containing the plans of the Empire here</p>
-    </div>
-
-    <div id="result-container">
-        <h2>Result from Server:</h2>
-        <pre id="server-result"></pre>
+    <div>
+        <div id="upload-container" onclick="handleClick()">
+            <input type="file" id="file-input" accept=".json" onchange="handleFile()">
+            <p id="upload-text">Click or drag and drop a JSON file containing the plans of the Empire here</p>
+        </div>
+        <div id="result-container">
+            <h2>Result from Server:</h2>
+            <pre id="server-result"></pre>
+        </div>
     </div>
 
     <script>
