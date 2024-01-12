@@ -1,6 +1,6 @@
 {
   "db_name": "SQLite",
-  "query": "SELECT * FROM ROUTES",
+  "query": "SELECT origin, destination, travel_time FROM ROUTES",
   "describe": {
     "columns": [
       {
@@ -28,5 +28,5 @@
       true
     ]
   },
-  "hash": "5f78a2e784e38a5d2b280e97864a78e4e3f2dacfbc19cc8739beceb117351c40"
+  "hash": "106c7c1813f1317f7eb9e091a9afd2a2df3ad457d4116bf8a2fbd654295c3ca0"
 }
