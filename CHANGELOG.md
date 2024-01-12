@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.1](https://github.com/Net-Mist/tell-me-the-odds/compare/v0.2.0...v0.2.1) (2024-01-12)
+
+
+### Bug Fixes
+
+* fix dockerhub push ([e4ff929](https://github.com/Net-Mist/tell-me-the-odds/commit/e4ff9290b6d875557eafe0b9616760d20d0f9faa))
+
 ## [0.2.0](https://github.com/Net-Mist/tell-me-the-odds/compare/v0.1.0...v0.2.0) (2024-01-12)
 
 
