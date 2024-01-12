@@ -3,7 +3,7 @@ use std::{collections::HashMap, fs::read_to_string};
 use anyhow::Result;
 use millennium_falcon::{
     application_services::{into_galaxy_routes_and_planet_id, MillenniumFalconData},
-    infrastructure_services::{actix::run, get_routes_from_db},
+    infrastructure_services::{actix::run, db::get_routes_from_db},
 };
 
 #[tokio::test]

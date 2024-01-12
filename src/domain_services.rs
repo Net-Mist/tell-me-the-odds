@@ -4,8 +4,8 @@ use anyhow::Result;
 
 use crate::domain_models::{BountyHunterPlanning, GalaxyRoutes, PlanetCatalog, PlanetId};
 
-/// When exploring all the states to find the best route, we want to
-/// privilege the one with less bounty hunter, then the one that took the less amont of time.
+/// When exploring all the states of the simulation to find the best route, we want to
+/// privilege the ones with less bounty hunter, then the ones that minimize the elapsed_time.
 /// To do this, we derive the trait Ord that will automatically sort the State, first by
 /// `n_bounty_hunter`, then by `elapsed_time` (then by `fluel` and then by `planet`, but this we don't care)
 #[derive(Debug, PartialEq, Eq, PartialOrd, Ord)]

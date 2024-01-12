@@ -4,7 +4,7 @@ use millennium_falcon::application_services::EmpireData;
 use millennium_falcon::application_services::MillenniumFalconData;
 use millennium_falcon::domain_services::compute_probability_of_success;
 use millennium_falcon::infrastructure_services::args::parse_cli;
-use millennium_falcon::infrastructure_services::get_routes_from_db;
+use millennium_falcon::infrastructure_services::db::get_routes_from_db;
 
 #[tokio::main]
 async fn main() -> Result<()> {

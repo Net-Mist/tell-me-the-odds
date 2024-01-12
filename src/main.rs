@@ -3,7 +3,7 @@ use anyhow::Result;
 use core::panic;
 use millennium_falcon::{
     application_services::{into_galaxy_routes_and_planet_id, MillenniumFalconData},
-    infrastructure_services::{actix::run, args::parse_webserver, get_routes_from_db},
+    infrastructure_services::{actix::run, args::parse_webserver, db::get_routes_from_db},
 };
 
 pub async fn setup_webserver(address: &str) -> Result<Server> {

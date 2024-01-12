@@ -92,6 +92,7 @@ impl GalaxyRoutes {
 }
 
 /// Structure keeping the relationship between the planet id and its information (for now only name).
+/// This structure is the only owner of all planet data.
 #[derive(Debug, PartialEq, Eq, Clone)]
 pub struct PlanetCatalog(HashMap<String, PlanetId>);
 
