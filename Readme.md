@@ -68,6 +68,12 @@ Contains the definitions of `PlanetId`, `GalaxyRoutes`, `PlanetCatalog` and `Bou
 
 Contains the `compute_probability_of_success` function.
 
+> Implementation notes:
+> It is fundamentally an A\* algorithm, patched to explore first paths without bounty hunters.
+> First, a Dijkstra algorithm is run to compute the shortest distance between every planet and the destination. This will be the heuristic function of the A\* algorithm.
+> Then the A\* is run, first without allowing to cross the path of a bounty hunter, then allowing a single one, ...
+> This logic is automatically implemented thanks to a BinaryHeap.
+
 ### Application services
 
 Contains the definition of `MillenniumFalconData` and `EmpireData` matching the json formats specified in the requirements of the app, and `Route` matching the database data format (but without db-related types or field) and some code to bridge the data.
