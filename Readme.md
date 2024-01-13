@@ -32,7 +32,7 @@ docker run -it --rm \
   -v ./logs:/app/logs \
   -v ./examples:/app/examples \
   -p 0.0.0.0:8000:8000 \
-  netmist/millennium-falcon:1.0.0 \
+  netmist/millennium-falcon:1.0.1 \
   examples/millennium-falcon.json
 ```
 
@@ -41,7 +41,7 @@ and
 ```sh
 docker run -it --rm \
   -v ./examples:/app/examples \
-  netmist/give-me-the-odds:1.0.0 \
+  netmist/give-me-the-odds:1.0.1 \
   examples/millennium-falcon.json \
   examples/example2/empire.json
 ```
