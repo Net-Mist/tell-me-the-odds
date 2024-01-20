@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.1](https://github.com/Net-Mist/tell-me-the-odds/compare/v1.0.0...v1.0.1) (2024-01-20)
+
+
+### Performance Improvements
+
+* improve `compute_probability_of_success` algorithm ([abec26f](https://github.com/Net-Mist/tell-me-the-odds/commit/abec26f759e776bce426c59ba6ddb793713968e0))
+
 ## [1.0.0](https://github.com/Net-Mist/tell-me-the-odds/compare/v0.2.1...v1.0.0) (2024-01-12)
 
 

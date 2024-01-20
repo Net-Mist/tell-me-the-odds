@@ -1,6 +1,6 @@
 [package]
 name = "millennium_falcon"
-version = "1.0.0"
+version = "1.0.1"
 license = "MIT"
 edition = "2021"
 default-run = "millennium_falcon"
