@@ -981,7 +981,7 @@ checksum = "523dc4f511e55ab87b694dc30d0f820d60906ef06413f93d4d7a1385599cc149"
 
 [[package]]
 name = "millennium_falcon"
-version = "1.0.1"
+version = "1.0.0"
 dependencies = [
  "actix-web",
  "anyhow",
